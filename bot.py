@@ -60,6 +60,15 @@ def favoriteTweet(given_tweet):
     except twitter.TwitterError, t: 
         print "You've already favorited that tweet!"
 
+def retweetTweet(tweet_id): 
+    '''
+        Method to retweet a tweet. 
+    '''
+    try: 
+        api.PostRetweet(tweet_id)
+    except twitter.TwitterError, t: 
+        print "You've already retweeted that tweet!"
+
 def deleteTweet(word): 
     '''
         Method to delete a tweet with a specific word. 
@@ -94,33 +103,29 @@ def autoFavoriteMentions():
 
 def searchByTerm(term): 
     '''
-        Method to search
+        Method to search for a term
     '''
     search_feed = api.GetSearch(term)
     for tweet in search_feed: 
-        #use encode to avoid some unicode issues when trying to print tweets
+        #use .encode() to avoid some unicode issues when trying to print tweets
         print "@" + tweet.user.screen_name + " tweeted " + "\"" + tweet.text.encode('utf-8') + "\"" 
-        #Do whatever you want here! 
 
+        #Do whatever you want here! 
         #favorite that tweet 
         #favoriteTweet(tweet)
-
         #follow the account that tweeted the message
         #followAccount(tweet.user.id)
-
         #retweet tweet 
-        retweetTweet(tweet.id)
+        #retweetTweet(tweet.id)
 
 def printTimeline(): 
+    '''
+        Method to print 
+    '''
     timeline = api.GetHomeTimeline()
     for tweet in timeline: 
         print tweet.text.encode('utf-8')
-
-def retweetTweet(tweet_id): 
-    try: 
-        api.PostRetweet(tweet_id)
-    except twitter.TwitterError, t: 
-        print "You've already retweeted that tweet!"
+    return timeline
 
 '''
     Setup
@@ -132,7 +137,9 @@ api = twitter.Api(keys['consumer_key'], keys['consumer_secret'],
 
 #verifyCredentials()
 #postStatus("Twitter Bot test!")
-#deleteTweet('Bot')
-searchByTerm("#ILoveDigitalWomenISU")
+#deleteTweet('retweet me!')
+searchByTerm("Bernie Sanders")
 #autoFavoriteMentions() 
 #printTimeline()
+#picture = "path/to/media"
+#api.PostMedia("A tweet", picture)
