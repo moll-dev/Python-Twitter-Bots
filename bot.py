@@ -31,6 +31,8 @@ def verifyCredentials():
 
 '''
     A few recipes to help you get started
+    Feel free to use and edit these as you please. 
+    The print statements are for your feedback only, so feel free to remove those, too. 
 '''
 def postStatus(status): 
     '''
@@ -108,7 +110,7 @@ def searchByTerm(term):
     search_feed = api.GetSearch(term)
     for tweet in search_feed: 
         #use .encode() to avoid some unicode issues when trying to print tweets
-        print "@" + tweet.user.screen_name + " tweeted " + "\"" + tweet.text.encode('utf-8') + "\"" 
+        print "@" + tweet.user.screen_name.encode('utf-8') + " tweeted " + "\"" + tweet.text.encode('utf-8') + "\"" 
 
         #Do whatever you want here! 
         #favorite that tweet 
@@ -120,12 +122,11 @@ def searchByTerm(term):
 
 def printTimeline(): 
     '''
-        Method to print 
+        Method to print a timeline
     '''
     timeline = api.GetHomeTimeline()
     for tweet in timeline: 
         print tweet.text.encode('utf-8')
-    return timeline
 
 '''
     Setup
@@ -138,7 +139,7 @@ api = twitter.Api(keys['consumer_key'], keys['consumer_secret'],
 #verifyCredentials()
 #postStatus("Twitter Bot test!")
 #deleteTweet('retweet me!')
-searchByTerm("Bernie Sanders")
+#searchByTerm("#GHC15")
 #autoFavoriteMentions() 
 #printTimeline()
 #picture = "path/to/media"
