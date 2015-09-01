@@ -4,21 +4,25 @@
     <title>Creating a Twitter Bot with Python</title>
     <meta charset="utf-8">
     <style>
-      @import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
-      @import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
-      @import url(https://fonts.googleapis.com/css?family=Bangers);
+      @import url(https://fonts.googleapis.com/css?family=Source+Code+Pro|Viga|Open+Sans+Condensed:300,700|Open+Sans:400,600);
 
-      body { font-family: 'Droid Serif'; }
+      body { font-family: 'Open Sans'; font-weight: 600; }
       h2, h3 {
-        font-family: 'Yanone Kaffeesatz';
-        font-weight: normal;
+        font-family: 'Open Sans Condensed';
+        margin-top: 0px; 
+        margin-bottom: 0px; 
       }
       h1 { 
-        font-family: 'Bangers'
+        font-family: 'Viga'; 
+        margin-bottom: 0px; 
       }
-      .remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
-
+      h4 { 
+        margin-top: 0px; 
+        margin-bottom: 0px; 
+      }
+      .remark-code, .remark-inline-code { font-family: 'Open Sans Condensed'; }
+      .normal {background-color: #E6E6E6;}
+      .normal h1 {color: #0099CC;}
       .title {background-color: #0099CC; color: #E6E6E6;} 
     </style>
   </head>
@@ -29,19 +33,128 @@ class: center, middle, title
 
 # Creating a Twitter Bot with Python
 ##10 September 2015
-###Gabby Ortman, Computer Science
-
+###Gabby Ortman
 ---
 class: title
 #Getting Started
-
+.center[###To be successful, you will need:
+]
+  - Python 2 (the skeleton is Python 2 compatible)
+  - PIP (Python package manager)
+  - Python-Twitter
+  - Python-Twitter Documentation 
+  - Skeleton code
 
 ---
-
-# Introduction
+class: title
+#Check that you already have Python
+###Open a command line
+```bash
+>>> python
+```
+###Type 'python'
+```bash 
+Python 2.7.9 (default, Dec 10 2014, 12:24:55) [MSC v.1500 32 bit (Intel)] on win32
+Type "help", "copyright", "credits" or "license" for more information.
+```
 
 ---
-#okay
+class: title
+# Getting Started
+.center[##A Twitter bot?
+]
+.center[####yes, a Twitter bot!
+]
+
+###With a Twitter Bot you can: 
+- Thank new followers
+- Automatically favorite mentions and replies 
+- Delete tweets with swear words or words that'll put you on the NSA watch list. 
+- Interface with other APIs to tweet every word in the dictionary, post the weather, state whether it is Christmas or not
+- Search and reply to tweets with a specific phrase. 
+
+.center[######so versatile!
+]
+
+---
+class: center, middle, title
+# Let's jump into Twitter
+
+---
+class: normal
+#Account Setup
+- Login and go to https://www.apps.twitter.com/
+  - Name: Needs to be unique
+  - Description: Needs to be longer than 10 chars
+  - Website: Use “http://www.iastate.edu”
+  - CallBackUrl: Leave Blank
+- Go to the _Permission_ tab and select “Read, Write, and Access Direct Messages” and click “Update Settings”
+- Go to the _Keys and Access Token_ tab and under “Your Access Tokens”, click “Create my access token”
+- Refresh the Keys page
+- Copy and paste your 4 keys into a text file
+  * consumer key
+  * consumer secret
+  * access token key
+  * access token secret
+- Save file as 'keys.txt'
+
+---
+class: normal
+#Skeleton Code Explanation 
+###We need to authenticate with Twitter to actually use their API. 
+```python
+#Import the Twitter API
+import twitter
+
+def getKeysFromFile(filename):
+    f = open(filename, "r")
+    keys_array = f.read().split('\n')
+
+    keys = {'consumer_key':keys_array[0], 'consumer_secret':keys_array[1], 'access_token_key':keys_array[2], 'access_token_secret':keys_array[3]}
+
+    return keys
+
+keys = getKeysFromFile('keys.txt')
+api = twitter.Api(keys['consumer_key'], keys['consumer_secret'],
+                  keys['access_token_key'], keys['access_token_secret'])
+
+```
+
+---
+class: normal
+#Skeleton Code Explanation
+###Verify authentication
+```python
+def verifyCredentials():
+    print api.VerifyCredentials()
+```
+If that successfully runs, a long JSON response will be returned. 
+
+```python
+{"created_at": "Thu Jul 02 14:26:04 +0000 2015", "description": "A club at Iowa State University supporting women in tech fields! Thursdays @ 6:30 in Coover 1016", "favourites_count": 3, "followers_count": 23, "friends_count": 49, "id": 3355128755, "lang": "en", "location": "Ames, IA", "name": "Digital Women", "profile_background_color": "000000", "profile_background_image_url": "http://abs.twimg.com/images/themes/theme1/bg.png", "profile_background_tile": false, "profile_banner_url": "https://pbs.twimg.com/profile_banners/3355128755/1440908819", "profile_image_url": "https://pbs.twimg.com/profile_images/628703529335558144/z4VGYRkS_normal.jpg", "profile_link_color": "9266CC", "profile_sidebar_fill_color": "000000", "profile_text_color": "000000", "protected": false, "screen_name": "DigitalWomenISU", "status": {"created_at": "Mon Aug 31 20:10:52 +0000 2015", "favorite_count": 1, "favorited": false, "id": 638443858028707840, "in_reply_to_screen_name": "DigitalWomenISU", "in_reply_to_user_id": 3355128755, "lang": "en", "media": [{"display_url": "pic.twitter.com/jwtWtYB23L", "expanded_url": "http://twitter.com/DigitalWomenISU/status/638443858028707840/photo/1", "id": 638443857907052544, "id_str": "638443857907052544", "indices": [105, 127], "media_url": "http://pbs.twimg.com/media/CNw1Tl-UcAAUChw.png", "media_url_https": "https://pbs.twimg.com/media/CNw1Tl-UcAAUChw.png", "sizes": {"large": {"h": 612, "resize": "fit", "w": 792}, "medium": {"h": 463, "resize": "fit", "w": 600}, "small": {"h": 262, "resize": "fit", "w": 340}, "thumb": {"h": 150, "resize": "crop", "w": 150}}, "type": "photo", "url": "http://t.co/jwtWtYB23L"}], "retweet_count": 1, "retweeted": false, "source": "<a href=\"http://www.digitalwomen.ece.iastate.edu\" rel=\"nofollow\">Digital Women's Twitter Bot</a>", "text": "@DigitalWomenISU's first meeting is this Thursday at 6:30 p.m. in Coover 1016. We hope to see you there! http://t.co/jwtWtYB23L", "truncated": false, "user_mentions": [{"id": 3355128755, "name": "Digital Women", "screen_name": "DigitalWomenISU"}]}, "statuses_count": 11, "url": "http://t.co/rEltx4e4te"}
+```
+
+---
+class: center, middle, title
+#...okay, now what? 
+
+---
+class: normal
+#Interacting with Twitter
+```python
+#basic API call
+api.PostUpdate("I am a programming genius")
+```
+- ###'api' is the variable that holds our authentication keys.
+
+- ###'PostUpdate()'' is the method specified by the API wrapper to create a new tweet. 
+
+###For this workshop, I have wrapped most of these calls into functions for Ease of Use & Readability™
+
+---
+class: center, middle, title
+#Play around with the skeleton code! 
+###If you're feeling ambitious, check out the documentation and make your own calls
 
     </textarea>
     <script src="https://gnab.github.io/remark/downloads/remark-latest.min.js">

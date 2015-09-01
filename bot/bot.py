@@ -135,8 +135,7 @@ keys = getKeysFromFile('keys.txt')
 api = twitter.Api(keys['consumer_key'], keys['consumer_secret'],
                   keys['access_token_key'], keys['access_token_secret'])
 
-
-#verifyCredentials()
+verifyCredentials()
 #postStatus("Twitter Bot test!")
 #deleteTweet('retweet me!')
 #searchByTerm("#GHC15")
