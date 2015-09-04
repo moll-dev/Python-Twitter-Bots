@@ -31,4 +31,4 @@ pip install python-twitter
 ```
 
 
-####Shout out to Thomas Moll (QuantumFractal) for letting me expand on his original presentation (xoxo)
+####Shout out to Thomas Moll (QuantumFractal) for letting me expand on his original presentation. 
