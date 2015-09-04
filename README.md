@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #Creating a Twitter Bot using Python
 ##September 10, 2015
 
@@ -10,7 +9,7 @@ python
 
 #Install Python
 
-(Install Python)[https://www.python.org/downloads/]
+[Install Python](https://www.python.org/downloads/)
 Make sure you install Python 2! 
 
 If you're Python savvy and want to use Python 3, make the necessary changes (i.e., print "something" to print("something")) and other compatibility issues. 
@@ -41,4 +40,4 @@ Presentation adapted from Thomas Moll's original presentation
 TODO: 
 - Add links to download Python, PIP and Python-Twitter 
 - Or, rather, ask Thomas or Mike Davies for help on making a script that'll automatically do that for you. 
->>>>>>> origin/master
+
