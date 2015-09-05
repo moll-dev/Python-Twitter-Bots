@@ -5,21 +5,11 @@
 
 #Import the Twitter API 
 import twitter
+from secrets import keys
 
-def getKeysFromFile(filename):
-    '''
-        Gets our keys from a file
-        Parameters: 
-            filename - given filename to read keys from 
-        Returns: 
-            keys - a dictionary of keys to OAuth with Twitter 
-    '''
-    f = open(filename, "r")
-    keys_array = f.read().split('\n')
 
-    keys = {'consumer_key':keys_array[0], 'consumer_secret':keys_array[1], 'access_token_key':keys_array[2], 'access_token_secret':keys_array[3]}
-
-    return keys
+def main():
+    pass
 
 def verifyCredentials():
     '''
@@ -131,9 +121,8 @@ def printTimeline():
 '''
     Setup
 '''
-keys = getKeysFromFile('keys.txt')
 api = twitter.Api(keys['consumer_key'], keys['consumer_secret'],
-                  keys['access_token_key'], keys['access_token_secret'])
+                  keys['client_token'], keys['client_secret'])
 
 verifyCredentials()
 #postStatus("Twitter Bot test!")
@@ -143,3 +132,7 @@ verifyCredentials()
 #printTimeline()
 #picture = "path/to/media"
 #api.PostMedia("A tweet", picture)
+
+
+if __name__ == '__main__':
+    main()
